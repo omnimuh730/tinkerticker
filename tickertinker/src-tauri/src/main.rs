@@ -2,15 +2,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::Manager;
-use tickertinker_lib::network_monitor;
+use tickertinker_lib::networking;
 
 fn main() {
     tauri::Builder::default()
-        .manage(network_monitor::NetworkMonitorState::default())
+        .manage(networking::NetworkMonitorState::default())
         .invoke_handler(tauri::generate_handler![
-            network_monitor::start_capture,
-            network_monitor::stop_capture,
-            network_monitor::get_traffic_data
+            networking::start_capture,
+            networking::stop_capture,
+            networking::get_traffic_data
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
