@@ -8,6 +8,8 @@ import TrafficDisplay from './TrafficDisplay';
 function App() {
   const [selectedInterface, setSelectedInterface] = useState('');
   const [isCapturing, setIsCapturing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSelectInterface = (iface) => {
     setSelectedInterface(iface);
@@ -15,31 +17,48 @@ function App() {
   };
 
   const handleStartCapture = () => {
+    setIsLoading(true);
     // For now, hardcode a device name. You'll want to use the selectedInterface here.
     invoke('start_capture', { deviceName: selectedInterface })
-      .then(() => setIsCapturing(true))
+      .then(() => {
+        setIsCapturing(true);
+        setIsLoading(false);
+      })
       .catch((error) => {
-        console.error('Error starting capture:', error);
-        // Handle the error appropriately in the UI
+ setError(error);
+        setIsLoading(false);
       });
   };
 
   const handleStopCapture = () => {
- invoke('stop_capture')
- .then(() => setIsCapturing(false))
- .catch((error) => {
- console.error('Error stopping capture:', error);
+    setIsLoading(true);
+    invoke('stop_capture')
+      .then(() => {
+        setIsCapturing(false);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+ setError(error);
+      });
+  };
+
+  const handleGetTrafficData = () => {
+    invoke('get_traffic_data')
+      .then((data) => {
+        console.log('Fetched traffic data:', data);
+        setTrafficData(data); // Update state with fetched data
+      })
+      .catch((error) => {
+ setError(error);
       });
   };
 
   useEffect(() => {
-    const [trafficData, setTrafficData] = useState(null);
     let unlisten;
     const setupListener = async () => {
 
       unlisten = await listen('traffic-update', (event) => {
-        console.log('Received traffic data:', event.payload);
-        // You'll likely want to update state with this data to display it
+ setTrafficData(event.payload);
       });
     };
 
@@ -55,15 +74,18 @@ function App() {
   return (
     <div>
       <h1>TickerTinker Network Monitor</h1>
+ {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       <InterfaceSelector onSelectInterface={handleSelectInterface} />
- <CaptureControls
+      <CaptureControls
  selectedInterface={selectedInterface}
  onStart={handleStartCapture}
  onStop={handleStopCapture}
+ isCapturing={isCapturing}
  />
       <TrafficDisplay trafficData={trafficData} />
+      <button onClick={handleGetTrafficData}>Get Traffic Data</button>
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
     </div>
   );
 }
-
 export default App;

@@ -1,4 +1,3 @@
-rust
 #![allow(dead_code, clippy::enum_variant_names, clippy::module_inception)]
 
 use std::{collections::BTreeMap, sync::{Arc, Mutex}};

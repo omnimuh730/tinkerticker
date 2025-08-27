@@ -3,15 +3,18 @@ import React from 'react';
 function TrafficDisplay({ trafficData }) {
   // For now, just display the raw data
   // You'll want to format this data for better display later
+  console.log("Traffic data structure:", trafficData);
 
-  if (error) {
-    return <div>Error fetching traffic data: {error.toString()}</div>;
+  if (!trafficData) {
+    return <p>No traffic data yet.</p>;
   }
 
   return (
     <div>
       <h2>Network Traffic Data</h2>
-      <pre>{JSON.stringify(trafficData, null, 2)}</pre>
+      {/* Display some key information. Adjust based on the actual structure of trafficData */}
+      <p>Total Packets: {trafficData.total_packets}</p>
+      {/* You can add more details here based on the trafficData structure */}
     </div>
   );
 }

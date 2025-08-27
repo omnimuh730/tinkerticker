@@ -8,20 +8,13 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 1.5;
   font-weight: 400;
 
   color: #0f0f0f;
   background-color: #f6f6f6;
 
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-.container {
   margin: 0;
   padding-top: 10vh;
   display: flex;
@@ -41,11 +34,6 @@
   filter: drop-shadow(0 0 2em #24c8db);
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
@@ -57,6 +45,8 @@ a:hover {
 }
 
 h1 {
+  padding: 20px 0;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -64,9 +54,9 @@ input,
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 10px 20px;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
   color: #0f0f0f;
   background-color: #ffffff;
@@ -77,15 +67,11 @@ button {
 button {
   cursor: pointer;
 }
-
 button:hover {
-  border-color: #396cd8;
-}
-button:active {
   border-color: #396cd8;
   background-color: #e8e8e8;
 }
-
+ 
 input,
 button {
   outline: none;
@@ -110,7 +96,7 @@ button {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
-  button:active {
+  button:hover {
     background-color: #0f0f0f69;
   }
 }
