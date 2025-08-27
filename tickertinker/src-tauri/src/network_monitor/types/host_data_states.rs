@@ -1,48 +1,50 @@
-//! Module defining the `HostDataStates` struct related to hosts.
-
 use std::collections::BTreeSet;
 use std::net::IpAddr;
 
-use crate::network_monitor::types::country::Country;
-use crate::network_monitor::types::host::Host;
+use iced::widget::combo_box;
+
+use crate::countries::types::country::Country;
+use crate::networking::types::host::Host;
+use crate::report::types::search_parameters::SearchParameters;
 
 /// Struct to contain all the sets of data related to network hosts
+///
+/// It also stores combobox states for the host-related filters
 #[derive(Default)]
 pub struct HostDataStates {
     pub data: HostData,
-    // Removed HostStates as it was tied to Iced GUI comboboxes
+    pub states: HostStates,
 }
 
 impl HostDataStates {
-    // Removed update_states as it was tied to GUI elements and search parameters
-    // pub fn update_states(&mut self, search: &SearchParameters) {
-    //     let states = &mut self.states;
-    //     let data = &mut self.data;
-    //
-    //     if data.domains.1 {
-    //         states.domains = combo_box::State::with_selection(
-    //             data.domains.0.iter().cloned().collect(),
-    //             Some(&search.domain),
-    //         );
-    //         data.domains.1 = false;
-    //     }
-    //
-    //     if data.asns.1 {
-    //         states.asns = combo_box::State::with_selection(
-    //             data.asns.0.iter().cloned().collect(),
-    //             Some(&search.as_name),
-    //         );
-    //         data.asns.1 = false;
-    //     }
-    //
-    //     if data.countries.1 {
-    //         states.countries = combo_box::State::with_selection(
-    //             data.countries.0.iter().cloned().collect(),
-    //             Some(&search.country),
-    //         );
-    //         data.countries.1 = false;
-    //     }
-    // }
+    pub fn update_states(&mut self, search: &SearchParameters) {
+        let states = &mut self.states;
+        let data = &mut self.data;
+
+        if data.domains.1 {
+            states.domains = combo_box::State::with_selection(
+                data.domains.0.iter().cloned().collect(),
+                Some(&search.domain),
+            );
+            data.domains.1 = false;
+        }
+
+        if data.asns.1 {
+            states.asns = combo_box::State::with_selection(
+                data.asns.0.iter().cloned().collect(),
+                Some(&search.as_name),
+            );
+            data.asns.1 = false;
+        }
+
+        if data.countries.1 {
+            states.countries = combo_box::State::with_selection(
+                data.countries.0.iter().cloned().collect(),
+                Some(&search.country),
+            );
+            data.countries.1 = false;
+        }
+    }
 }
 
 #[derive(Default)]
@@ -69,10 +71,9 @@ impl HostData {
     }
 }
 
-// Removed HostStates as it was tied to Iced GUI comboboxes
-// #[derive(Default)]
-// pub struct HostStates {
-//     pub domains: combo_box::State<String>,
-//     pub asns: combo_box::State<String>,
-//     pub countries: combo_box::State<String>,
-// }
+#[derive(Default)]
+pub struct HostStates {
+    pub domains: combo_box::State<String>,
+    pub asns: combo_box::State<String>,
+    pub countries: combo_box::State<String>,
+}

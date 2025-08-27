@@ -86,7 +86,7 @@ mod tests {
     use std::ops::RangeInclusive;
     use std::str::FromStr;
 
-    use super::IpCollection;
+    use crate::networking::types::ip_collection::IpCollection;
 
     #[test]
     fn test_default_collection_contains_everything() {
@@ -267,7 +267,7 @@ mod tests {
         assert!(!collection_2.contains(&IpAddr::from_str("1.1.100.5").unwrap()));
         assert!(collection_2.contains(&IpAddr::from_str("1.1.3.255").unwrap()));
 
-        // check that ipv4 range doesn\'t contain ipv6
+        // check that ipv4 range doesn't contain ipv6
         let collection_3 = IpCollection::new("0.0.0.0-255.255.255.255").unwrap();
         assert!(!collection_3.contains(&IpAddr::from_str("::").unwrap()));
         assert!(!collection_3.contains(&IpAddr::from_str("1111::2222").unwrap()));
@@ -276,9 +276,7 @@ mod tests {
     #[test]
     fn test_ip_collection_contains_ipv6() {
         let collection =
-                IpCollection::new( "2001:db8:1234:0000:0000:0000:0000:0000-2001:db8:1234:ffff:ffff:ffff:ffff:ffff,daa::aad,caa::aac\
-            ")
-                .unwrap();
+                IpCollection::new( "2001:db8:1234:0000:0000:0000:0000:0000-2001:db8:1234:ffff:ffff:ffff:ffff:ffff,daa::aad,caa::aac").unwrap();
         assert!(
             collection
                 .contains(&IpAddr::from_str("2001:db8:1234:0000:0000:0000:0000:0000").unwrap())
@@ -318,7 +316,7 @@ mod tests {
         assert!(collection_2.contains(&IpAddr::from_str("aa::bbcc").unwrap()));
         assert!(collection_2.contains(&IpAddr::from_str("00aa:0001::00").unwrap()));
 
-        // check that ipv6 range doesn\'t contain ipv4
+        // check that ipv6 range doesn't contain ipv4
         let collection_3 = IpCollection::new("0000::0000-ffff::8888").unwrap();
         assert!(!collection_3.contains(&IpAddr::from_str("192.168.1.1").unwrap()));
         assert!(!collection_3.contains(&IpAddr::from_str("0.0.0.0").unwrap()));

@@ -1,4 +1,3 @@
-rust
 //! Module containing functions executed by the thread in charge of parsing sniffed packets
 
 use std::collections::HashMap;
@@ -336,12 +335,12 @@ fn from_null(packet: &[u8]) -> Result<LaxPacketHeaders<'_>, LaxHeaderSliceError>
 }
 
 fn reverse_dns_lookup(
-    resolutions_state: &Arc<Mutex<AddressesResolutionState>>,\
-    new_hosts_to_send: &Arc<Mutex<Vec<HostMessage>>>,\
-    key: &AddressPortPair,\
-    traffic_direction: TrafficDirection,\
-    interface_addresses: &Vec<Address>,\
-    mmdb_readers: &MmdbReaders,\
+    resolutions_state: &Arc<Mutex<AddressesResolutionState>>,
+    new_hosts_to_send: &Arc<Mutex<Vec<HostMessage>>>,
+    key: &AddressPortPair,
+    traffic_direction: TrafficDirection,
+    interface_addresses: &Vec<Address>,
+    mmdb_readers: &MmdbReaders,
     app_handle: &AppHandle, // Use AppHandle to emit events
 ) {
     let address_to_lookup = get_address_to_lookup(key, traffic_direction);
@@ -457,7 +456,7 @@ fn maybe_emit_traffic_update_live(
     first_packet_ticks: &mut Option<Instant>,
 ) {
     if first_packet_ticks.is_some_and(|i| i.elapsed() >= Duration::from_millis(1000)) {
-        *first_packet_ticks =\
+        *first_packet_ticks = 
             first_packet_ticks.and_then(|i| i.checked_add(Duration::from_millis(1000)));
         let _ = app_handle.emit_all(
             "traffic_update",

@@ -1,10 +1,10 @@
-//! Module defining the `CaptureContext` struct, which represents the context of a network capture.
-
+use crate::gui::types::filters::Filters;
+use crate::networking::types::my_device::MyDevice;
+use crate::networking::types::my_link_type::MyLinkType;
+use crate::translations::translations::network_adapter_translation;
+use crate::translations::translations_4::capture_file_translation;
+use crate::translations::types::language::Language;
 use pcap::{Active, Address, Capture, Error, Packet, Savefile, Stat};
-
-use crate::network_monitor::types::my_device::MyDevice;
-use crate::network_monitor::types::my_link_type::MyLinkType;
-use crate::network_monitor::types::packet_filters_fields::PacketFiltersFields;
 
 pub enum CaptureContext {
     Live(Live),
@@ -14,7 +14,7 @@ pub enum CaptureContext {
 }
 
 impl CaptureContext {
-    pub fn new(source: &CaptureSource, pcap_out_path: Option<&String>, filters: &PacketFiltersFields) -> Self {
+    pub fn new(source: &CaptureSource, pcap_out_path: Option<&String>, filters: &Filters) -> Self {
         let mut cap_type = match CaptureType::from_source(source, pcap_out_path) {
             Ok(c) => c,
             Err(e) => return Self::Error(e.to_string()),
@@ -22,7 +22,7 @@ impl CaptureContext {
 
         // only apply BPF filter if it is active, and return an error if it fails to apply
         if filters.is_some_filter_active()
-            && let Err(e) = cap_type.set_bpf(&filters.bpf())
+            && let Err(e) = cap_type.set_bpf(filters.bpf())
         {
             return Self::Error(e.to_string());
         }
@@ -48,10 +48,10 @@ impl CaptureContext {
     }
 
     fn new_live_with_savefile(cap: Capture<Active>, savefile: Savefile) -> Self {
-        Self::LiveWithSavefile {
+        Self::LiveWithSavefile(LiveWithSavefile {
             live: Live { cap },
             savefile,
-        }
+        })
     }
 
     fn new_offline(cap: Capture<pcap::Offline>) -> Self {
@@ -96,7 +96,8 @@ pub struct LiveWithSavefile {
 }
 
 pub struct Offline {
-    cap: Capture<pcap::Offline>,\n}
+    cap: Capture<pcap::Offline>,
+}
 
 pub enum CaptureType {
     Live(Capture<Active>),
@@ -154,6 +155,13 @@ pub enum CaptureSource {
 }
 
 impl CaptureSource {
+    pub fn title(&self, language: Language) -> &str {
+        match self {
+            Self::Device(_) => network_adapter_translation(language),
+            Self::File(_) => capture_file_translation(language),
+        }
+    }
+
     pub fn get_addresses(&self) -> &Vec<Address> {
         match self {
             Self::Device(device) => device.get_addresses(),
@@ -214,4 +222,9 @@ impl MyPcapImport {
     }
 }
 
-// Removed GUI-specific CaptureSourcePicklist
+#[derive(Clone, Eq, PartialEq, Debug, Copy, Default)]
+pub enum CaptureSourcePicklist {
+    #[default]
+    Device,
+    File,
+}

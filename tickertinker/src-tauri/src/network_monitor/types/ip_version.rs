@@ -1,9 +1,7 @@
-//! Enum representing the possible observed values of IP protocol version.
-
 use std::fmt;
 
 /// Enum representing the possible observed values of IP protocol version.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum IpVersion {
     /// Internet Protocol version 4
     IPv4,

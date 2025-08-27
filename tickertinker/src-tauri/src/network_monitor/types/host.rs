@@ -1,10 +1,8 @@
-//! Module to represent a network host
-
-use crate::network_monitor::types::asn::Asn;
-use crate::network_monitor::types::data_info_host::DataInfoHost;
-use crate::network_monitor::types::country::Country;
+use crate::countries::types::country::Country;
+use crate::networking::types::asn::Asn;
+use crate::networking::types::data_info_host::DataInfoHost;
 use std::net::IpAddr;
-use serde::Serialize;
+
 /// Struct to represent a network host
 #[derive(Default, PartialEq, Eq, Hash, Clone, Debug)]
 pub struct Host {

@@ -1,4 +1,3 @@
-rust
 #[derive(Clone, Default, Debug, Copy, Eq, PartialEq, Serialize)]
 pub struct Timestamp {
     secs: i664,

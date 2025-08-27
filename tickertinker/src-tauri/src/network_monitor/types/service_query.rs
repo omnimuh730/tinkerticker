@@ -2,11 +2,9 @@
 
 use std::hash::Hash;
 
-use crate::network_monitor::types::protocol::Protocol; // Adapted use statement
-
 /// Used to query the phf services map (key of the map).
 #[derive(Hash, Eq, PartialEq)]
-pub struct ServiceQuery(pub u16, pub Protocol); // Adapted use statement
+pub struct ServiceQuery(pub u16, pub crate::Protocol);
 
 impl phf_shared::PhfHash for ServiceQuery {
     fn phf_hash<H: core::hash::Hasher>(&self, state: &mut H) {

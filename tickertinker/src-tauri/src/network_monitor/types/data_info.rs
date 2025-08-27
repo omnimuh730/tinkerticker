@@ -1,9 +1,9 @@
 //! Module defining the `DataInfo` struct, which represents incoming and outgoing packets and bytes.
 
-use crate::network_monitor::types::data_representation::DataRepr;
-use crate::network_monitor::types::traffic_direction::TrafficDirection;
+use crate::networking::types::data_representation::DataRepr;
+use crate::networking::types::traffic_direction::TrafficDirection;
+use crate::report::types::sort_type::SortType;
 use std::cmp::Ordering;
-use serde::Serialize;
 use std::time::Instant;
 
 /// Amount of exchanged data (packets and bytes) incoming and outgoing, with the timestamp of the latest occurrence
@@ -11,7 +11,6 @@ use std::time::Instant;
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub struct DataInfo {
     /// Incoming packets
-    #[serde(rename = "incoming_packets")]
     incoming_packets: u128,
     /// Outgoing packets
     outgoing_packets: u128,
@@ -93,14 +92,13 @@ impl DataInfo {
         self.final_instant = rhs.final_instant;
     }
 
-    // Removed reference to `SortType` as it's likely GUI-specific
-    // pub fn compare(&self, other: &Self, sort_type: SortType, data_repr: DataRepr) -> Ordering {
-    //     match sort_type {
-    //         SortType::Ascending => self.tot_data(data_repr).cmp(&other.tot_data(data_repr)),
-    //         SortType::Descending => other.tot_data(data_repr).cmp(&self.tot_data(data_repr)),
-    //         SortType::Neutral => other.final_instant.cmp(&self.final_instant),
-    //     }
-    // }
+    pub fn compare(&self, other: &Self, sort_type: SortType, data_repr: DataRepr) -> Ordering {
+        match sort_type {
+            SortType::Ascending => self.tot_data(data_repr).cmp(&other.tot_data(data_repr)),
+            SortType::Descending => other.tot_data(data_repr).cmp(&self.tot_data(data_repr)),
+            SortType::Neutral => other.final_instant.cmp(&self.final_instant),
+        }
+    }
 
     #[cfg(test)]
     pub fn new_for_tests(
@@ -134,9 +132,7 @@ impl Default for DataInfo {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::network_monitor::types::traffic_direction::TrafficDirection;
-    // Removed reference to SortType
-    // use crate::report::types::sort_type::SortType;
+    use crate::networking::types::traffic_direction::TrafficDirection;
 
     #[test]
     fn test_data_info() {
@@ -192,45 +188,45 @@ mod tests {
         assert_eq!(data_info_2.outgoing_data(DataRepr::Bits), 3200);
 
         // compare data_info_1 and data_info_2
-        // Removed compare tests as SortType was removed
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Packets),
-        //     Ordering::Less
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Packets),
-        //     Ordering::Greater
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Packets),
-        //     Ordering::Greater
-        // );
 
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Bytes),
-        //     Ordering::Greater
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Bytes),
-        //     Ordering::Less
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Bytes),
-        //     Ordering::Greater
-        // );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Packets),
+            Ordering::Less
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Packets),
+            Ordering::Greater
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Packets),
+            Ordering::Greater
+        );
 
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Bits),
-        //     Ordering::Greater
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Bits),
-        //     Ordering::Less
-        // );
-        // assert_eq!(
-        //     data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Bits),
-        //     Ordering::Greater
-        // );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Bytes),
+            Ordering::Greater
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Bytes),
+            Ordering::Less
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Bytes),
+            Ordering::Greater
+        );
+
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Ascending, DataRepr::Bits),
+            Ordering::Greater
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Descending, DataRepr::Bits),
+            Ordering::Less
+        );
+        assert_eq!(
+            data_info_1.compare(&data_info_2, SortType::Neutral, DataRepr::Bits),
+            Ordering::Greater
+        );
 
         // refresh data_info_1 with data_info_2
         assert!(data_info_1.final_instant < data_info_2.final_instant);

@@ -1,5 +1,8 @@
 use pcap::Linktype;
 
+use crate::Language;
+use crate::translations::translations_3::link_type_translation;
+
 /// Currently supported link types
 #[derive(Copy, Clone, Default)]
 pub enum MyLinkType {
@@ -31,7 +34,7 @@ impl MyLinkType {
         }
     }
 
-    pub fn full_print_on_one_line(self) -> String {
+    pub fn full_print_on_one_line(self, language: Language) -> String {
         match self {
             Self::Null(l)
             | Self::Ethernet(l)
@@ -41,7 +44,8 @@ impl MyLinkType {
             | Self::IPv6(l)
             | Self::Unsupported(l) => {
                 format!(
-                    "Link Type: {} ({})",
+                    "{}: {} ({})",
+                    link_type_translation(language),
                     l.get_name().unwrap_or_else(|_| l.0.to_string()),
                     l.get_description().unwrap_or_else(|_| String::new())
                 )
