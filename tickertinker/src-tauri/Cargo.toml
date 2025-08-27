@@ -16,6 +16,9 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2.0", features = [] }
+rustrict = "0.7.36"
+phf_codegen = "0.13.1" # Add this line
+phf_shared = "0.13.1"
 
 [dependencies]
 tauri = { version = "2.0", features = [] }
@@ -36,13 +39,10 @@ toml = "0.9.5"
 ctrlc = { version = "3.4.7", features = ["termination"] }
 rfd = "0.15.4"
 phf = "0.13.1"
-phf_shared = "0.13.1"
 splines = "5.0.0"
 clap = { version = "4.5.44", features = ["derive"] }
 tokio = { version = "1.47.1", features = ["macros"] }
 async-channel = "2.5.0"
-rustrict = "0.7.36"
-phf_codegen = "0.13.1" # Add this line
 
 [target.'cfg(windows)'.dependencies]
 gag = "1.0.0"
