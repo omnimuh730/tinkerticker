@@ -1,7 +1,6 @@
 pub mod networking;
 pub mod mmdb;
 pub mod countries;
-pub mod gui;
 pub mod report;
 pub mod translations;
 pub mod utils;
