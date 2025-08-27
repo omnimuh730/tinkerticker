@@ -1,11 +1,38 @@
+use std::hash::Hash;
+
+// Implement required traits for phf_codegen
+impl phf_shared::PhfHash for ServiceQuery {
+    fn phf_hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        let ServiceQuery(port, protocol) = self;
+        port.hash(state);
+        protocol.hash(state);
+    }
+}
+
+impl phf_shared::FmtConst for ServiceQuery {
+    fn fmt_const(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let ServiceQuery(port, protocol) = self;
+        write!(f, "ServiceQuery({port}, Protocol::{protocol:?})")
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Protocol {
+    TCP,
+    UDP,
+    ICMP,
+    ARP,
+}
+
+#[derive(Hash, Eq, PartialEq)]
+pub struct ServiceQuery(pub u16, pub Protocol);
+
 use std::borrow::Cow;
 use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
 
-include!("./src/networking/types/service_query.rs");
-include!("./src/networking/types/protocol.rs");
 
 const SERVICES_LIST_PATH: &str = "./services.txt"; // Note: The path might need adjustment
 
