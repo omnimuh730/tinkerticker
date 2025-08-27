@@ -72,7 +72,7 @@ fn get_valid_service_fmt_const(s: &str) -> String {
         {
             panic!("Inappropriate service name found: {inappropriate}")
         }
-        name => format!("Service::Name(\\\"{name}\\\")"),
+        name => format!("Service::Name(\"{}\")", name),
     }
 }
 

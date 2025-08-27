@@ -43,6 +43,9 @@ splines = "5.0.0"
 clap = { version = "4.5.44", features = ["derive"] }
 tokio = { version = "1.47.1", features = ["macros"] }
 async-channel = "2.5.0"
+rustrict = "0.7.36"
+phf_codegen = "0.13.1" # Add this line
+phf_shared = "0.13.1"
 
 [target.'cfg(windows)'.dependencies]
 gag = "1.0.0"
