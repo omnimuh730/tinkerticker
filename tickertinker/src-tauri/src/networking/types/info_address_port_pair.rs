@@ -4,7 +4,7 @@
 use std::cmp::Ordering;
 use std::collections::HashMap;
 
-use crate::Service;
+use crate::networking::types::service::Service;
 use crate::networking::types::arp_type::ArpType;
 use crate::networking::types::data_representation::DataRepr;
 use crate::networking::types::icmp_type::IcmpType;

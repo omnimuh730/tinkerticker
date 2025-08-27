@@ -1,6 +1,7 @@
 use std::net::{IpAddr, Ipv6Addr};
 
-use crate::{IpVersion, Protocol};
+use crate::networking::types::ip_version::IpVersion;
+use crate::networking::types::protocol::Protocol;
 
 /// Fields extracted from a packet to determine if this packet matches the defined filters
 #[derive(Clone)]

@@ -1,6 +1,6 @@
 //! Module defining the `AddressPortPair` struct, which represents a network address:port pair.
 
-use crate::Protocol;
+use crate::networking::types::protocol::Protocol;
 use std::net::IpAddr;
 
 /// Struct representing a network address:port pair.

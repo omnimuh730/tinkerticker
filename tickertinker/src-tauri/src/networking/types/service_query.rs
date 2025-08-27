@@ -1,10 +1,12 @@
+
 // WARNING: this file is imported in build.rs
 
 use std::hash::Hash;
+use super::protocol::Protocol;
 
 /// Used to query the phf services map (key of the map).
 #[derive(Hash, Eq, PartialEq)]
-pub struct ServiceQuery(pub u16, pub crate::Protocol);
+pub struct ServiceQuery(pub u16, pub Protocol);
 
 impl phf_shared::PhfHash for ServiceQuery {
     fn phf_hash<H: core::hash::Hasher>(&self, state: &mut H) {

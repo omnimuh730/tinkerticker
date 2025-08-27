@@ -1,6 +1,6 @@
 use pcap::Linktype;
 
-use crate::Language;
+use crate::translations::types::language::Language;
 use crate::translations::translations_3::link_type_translation;
 
 /// Currently supported link types

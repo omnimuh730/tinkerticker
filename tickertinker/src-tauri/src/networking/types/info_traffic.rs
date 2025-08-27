@@ -1,4 +1,4 @@
-use crate::Service;
+use crate::networking::types::service::Service;
 use crate::networking::types::address_port_pair::AddressPortPair;
 use crate::networking::types::data_info::DataInfo;
 use crate::networking::types::data_info_host::DataInfoHost;

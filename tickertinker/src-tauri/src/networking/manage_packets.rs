@@ -16,7 +16,8 @@ use crate::networking::types::service::Service;
 use crate::networking::types::service_query::ServiceQuery;
 use crate::networking::types::traffic_direction::TrafficDirection;
 use crate::networking::types::traffic_type::TrafficType;
-use crate::{IpVersion, Protocol};
+use crate::networking::types::ip_version::IpVersion;
+use crate::networking::types::protocol::Protocol;
 use std::fmt::Write;
 
 include!(concat!(env!("OUT_DIR"), "/services.rs"));
@@ -512,8 +513,8 @@ mod tests {
     use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
     use std::str::FromStr;
 
-    use crate::Protocol;
-    use crate::Service;
+    use crate::networking::types::protocol::Protocol;
+    use crate::networking::types::service::Service;
     use crate::networking::manage_packets::{
         get_service, get_traffic_direction, get_traffic_type, is_local_connection,
         mac_from_dec_to_hex,
