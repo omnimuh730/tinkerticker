@@ -11,7 +11,6 @@ use etherparse::err::ip::{HeaderError, LaxHeaderSliceError};
 use etherparse::err::{Layer, LenError};
 use etherparse::{LaxPacketHeaders, LenSource};
 use pcap::{Address, Capture, Device, Packet, Savefile, Stat};
-use dns_lookup::lookup_addr;
 use tauri::AppHandle;
 
 use crate::network_monitor::types::address_port_pair::AddressPortPair;
@@ -39,8 +38,7 @@ use crate::network_monitor::mmdb::types::mmdb_reader::MmdbReaders;
 
 /// The calling thread enters a loop in which it waits for network packets
 pub fn parse_packets(
-    app_handle: AppHandle,
-    cap_id: usize,
+    tx: async_channel::Sender<InfoTraffic>,
     mut cs: CaptureSource,
     mmdb_readers: MmdbReaders,
     capture_context: CaptureContext,
@@ -49,11 +47,7 @@ pub fn parse_packets(
     let (mut cap, mut savefile) = capture_context.consume();
 
     let mut info_traffic_msg = InfoTraffic::default();
-    let resolutions_state = Arc::new(Mutex::new(AddressesResolutionState::default()));
-    // list of newly resolved hosts to be sent (batched to avoid UI updates too often)
-    let new_hosts_to_send = Arc::new(Mutex::new(Vec::new()));
-
-    // instant of the first parsed packet plus multiples of 1 second (only used in live captures)
+    // This instant is used for periodic sending of InfoTraffic updates
     let mut first_packet_ticks = None;
 
     loop {

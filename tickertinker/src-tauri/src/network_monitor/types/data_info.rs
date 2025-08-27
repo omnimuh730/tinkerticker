@@ -3,6 +3,7 @@
 use crate::network_monitor::types::data_representation::DataRepr;
 use crate::network_monitor::types::traffic_direction::TrafficDirection;
 use std::cmp::Ordering;
+use serde::Serialize;
 use std::time::Instant;
 
 /// Amount of exchanged data (packets and bytes) incoming and outgoing, with the timestamp of the latest occurrence
@@ -10,6 +11,7 @@ use std::time::Instant;
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub struct DataInfo {
     /// Incoming packets
+    #[serde(rename = "incoming_packets")]
     incoming_packets: u128,
     /// Outgoing packets
     outgoing_packets: u128,

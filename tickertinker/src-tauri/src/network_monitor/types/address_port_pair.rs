@@ -2,7 +2,7 @@
 
 use crate::network_monitor::protocol::Protocol;
 use std::net::IpAddr;
-
+use serde::Serialize;
 /// Struct representing a network address:port pair.
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 pub struct AddressPortPair {

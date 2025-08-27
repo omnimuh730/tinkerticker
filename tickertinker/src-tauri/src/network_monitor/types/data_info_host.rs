@@ -2,6 +2,7 @@
 
 use crate::network_monitor::types::data_info::DataInfo;
 use crate::network_monitor::types::traffic_type::TrafficType;
+use serde::Serialize;
 
 /// Host-related information.
 #[derive(Clone, Copy, Default, Debug, Eq, PartialEq, Hash)]
@@ -16,6 +17,7 @@ pub struct DataInfoHost {
     pub is_local: bool,
     /// Determine if the connection is with a bogon address
     pub is_bogon: Option<&'static str>,
+ #[derive(Serialize)]
     /// Determine if the connection with this host is unicast, multicast, or broadcast
     pub traffic_type: TrafficType,
 }

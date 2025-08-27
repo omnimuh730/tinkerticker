@@ -4,7 +4,7 @@ use crate::network_monitor::types::asn::Asn;
 use crate::network_monitor::types::data_info_host::DataInfoHost;
 use crate::network_monitor::types::country::Country;
 use std::net::IpAddr;
-
+use serde::Serialize;
 /// Struct to represent a network host
 #[derive(Default, PartialEq, Eq, Hash, Clone, Debug)]
 pub struct Host {

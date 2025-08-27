@@ -6,7 +6,7 @@ use std::fmt::{Display, Formatter};
 use etherparse::ArpOperation;
 use std::fmt::Write;
 
-#[derive(Copy, Clone, PartialEq, Eq, Hash, Default, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash, Default, Debug, serde::Serialize)]
 pub enum ArpType {
     Request,
     Reply,

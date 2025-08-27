@@ -9,7 +9,7 @@ use crate::network_monitor::types::timestamp::Timestamp;
 use std::collections::HashMap;
 
 /// Struct containing overall traffic statistics and data.
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, Serialize)]
 pub struct InfoTraffic {
     /// Total amount of exchanged data
     pub tot_data_info: DataInfo,

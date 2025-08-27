@@ -4,6 +4,7 @@
 use std::cmp::Ordering;
 use std::collections::HashMap;
 
+use serde::Serialize;
 use crate::network_monitor::types::arp_type::ArpType;
 use crate::network_monitor::types::data_representation::DataRepr;
 use crate::network_monitor::types::icmp_type::IcmpType;

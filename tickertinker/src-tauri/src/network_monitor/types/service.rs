@@ -1,6 +1,7 @@
 /// Upper layer services.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum Service {
+ #[derive(serde::Serialize)]
     /// One of the known services.
     Name(&'static str),
     /// Not identified

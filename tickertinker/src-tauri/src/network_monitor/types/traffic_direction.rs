@@ -1,5 +1,7 @@
 //! Module representing the possible traffic direction (incoming or outgoing).
 
+use serde::Serialize;
+
 /// Enum representing the possible traffic direction (incoming or outgoing).
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum TrafficDirection {

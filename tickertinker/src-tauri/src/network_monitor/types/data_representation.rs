@@ -132,7 +132,7 @@ impl Default for DataInfo {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)] // Add Serialize/Deserialize
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum DataRepr {
     Packets,
     Bytes,
