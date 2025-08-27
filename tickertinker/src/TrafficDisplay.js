@@ -1,30 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { invoke } from '@tauri-apps/api';
+import React from 'react';
 
-function TrafficDisplay({ isCapturing }) {
-  const [trafficData, setTrafficData] = useState({ total_packets: 0, total_bytes: 0 });
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let intervalId;
-    if (isCapturing) {
-      intervalId = setInterval(async () => {
-        try {
-          const result = await invoke('get_traffic_data');
-          setTrafficData(result);
-        } catch (err) {
-          setError(err);
-          console.error('Error getting traffic data:', err);
-        }
-      }, 500); // Poll every 500ms
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [isCapturing]);
+function TrafficDisplay({ trafficData }) {
+  // For now, just display the raw data
+  // You'll want to format this data for better display later
 
   if (error) {
     return <div>Error fetching traffic data: {error.toString()}</div>;
@@ -32,9 +10,8 @@ function TrafficDisplay({ isCapturing }) {
 
   return (
     <div>
-      <h2>Network Traffic</h2>
-      <p>Total Packets: {trafficData.total_packets}</p>
-      <p>Total Bytes: {trafficData.total_bytes}</p>
+      <h2>Network Traffic Data</h2>
+      <pre>{JSON.stringify(trafficData, null, 2)}</pre>
     </div>
   );
 }
