@@ -1,4 +1,3 @@
-rust
 //! Module containing the definition of bogon addresses.
 
 use crate::network_monitor::types::ip_collection::IpCollection;

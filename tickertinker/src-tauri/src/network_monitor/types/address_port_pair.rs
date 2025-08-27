@@ -1,4 +1,3 @@
-rust
 //! Module defining the `AddressPortPair` struct, which represents a network address:port pair.
 
 use crate::network_monitor::protocol::Protocol;

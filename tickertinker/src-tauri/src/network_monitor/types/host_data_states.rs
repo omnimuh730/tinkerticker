@@ -1,4 +1,3 @@
-rust
 //! Module defining the `HostDataStates` struct related to hosts.
 
 use std::collections::BTreeSet;

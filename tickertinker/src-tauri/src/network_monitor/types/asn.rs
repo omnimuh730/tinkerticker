@@ -1,4 +1,3 @@
-rust
 //! Module defining the `Asn` struct, which represents an Autonomous System.
 
 /// Struct to represent an Autonomous System

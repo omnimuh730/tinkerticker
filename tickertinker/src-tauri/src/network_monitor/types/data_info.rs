@@ -1,4 +1,3 @@
-rust
 //! Module defining the `DataInfo` struct, which represents incoming and outgoing packets and bytes.
 
 use crate::network_monitor::types::data_representation::DataRepr;

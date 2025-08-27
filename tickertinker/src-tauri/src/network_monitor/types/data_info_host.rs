@@ -1,4 +1,3 @@
-rust
 //! Module defining the `DataInfoHost` struct related to hosts.
 
 use crate::network_monitor::types::data_info::DataInfo;

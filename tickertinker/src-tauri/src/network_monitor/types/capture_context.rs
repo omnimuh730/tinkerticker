@@ -1,4 +1,3 @@
-rust
 //! Module defining the `CaptureContext` struct, which represents the context of a network capture.
 
 use pcap::{Active, Address, Capture, Error, Packet, Savefile, Stat};

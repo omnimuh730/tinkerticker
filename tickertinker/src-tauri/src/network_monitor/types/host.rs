@@ -1,4 +1,3 @@
-rust
 //! Module to represent a network host
 
 use crate::network_monitor::types::asn::Asn;

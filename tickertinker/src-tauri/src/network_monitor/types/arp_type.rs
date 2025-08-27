@@ -1,4 +1,3 @@
-rust
 //! Module defining the `ArpType` enum, which represents the type of ARP packet.
 
 use std::collections::HashMap;

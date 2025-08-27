@@ -1,4 +1,3 @@
-rust
 use crate::network_monitor::types::address_port_pair::AddressPortPair;
 use crate::network_monitor::types::data_info::DataInfo;
 use crate::network_monitor::types::data_info_host::DataInfoHost;
